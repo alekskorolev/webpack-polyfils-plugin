@@ -1,0 +1,12 @@
+{
+  "name": "webpack-polyfil-plugin",
+  "version": "0.1.0",
+  "description": "Webpack polyfil inserter",
+  "main": "index.js",
+  "author": "Aleksandr Korolev",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "polyfill-service": "^3.3.0"
+  }
+}
