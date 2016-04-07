@@ -16,6 +16,10 @@ PolyfillsPlugin.prototype.apply = function(compiler) {
         JSONPolyfill = fs.readFileSync(require.resolve('polyfill-service/polyfills/JSON/polyfill.js'), 'utf8') || '';
         compilation.assets[this.options.bundle]._source.children.unshift(JSONPolyfill);
     }
+    if (this.options.html5Elements) {
+        JSONPolyfill = fs.readFileSync(require.resolve('polyfill-service/polyfills/~html5-elements/polyfill.js'), 'utf8') || '';
+        compilation.assets[this.options.bundle]._source.children.unshift(JSONPolyfill);
+    }
     callback();
   });
 };
