@@ -3,23 +3,23 @@ var fs = require('fs'),
     JSONPolyfill;
 
 function PolyfillsPlugin(options) {
-    this.options = options || {};
+    PolyfillsPlugin.options = options || {};
 }
 
 PolyfillsPlugin.prototype.apply = function(compiler) {
     compiler.plugin("emit", function(compilation, callback) {
-        if (compilation.assets[this.options.bundle]) {
-            if (this.options.ObjectDefineProperty) {
+        if (compilation.assets[PolyfillsPlugin.options.bundle]) {
+            if (PolyfillsPlugin.options.ObjectDefineProperty) {
                 ObjectDefinePropertyPolyfill = fs.readFileSync(require.resolve('polyfill-service/polyfills/Object/defineProperty/polyfill.js'), 'utf8') || '';
-                compilation.assets[this.options.bundle]._source.children.unshift(ObjectDefinePropertyPolyfill);
+                compilation.assets[PolyfillsPlugin.options.bundle]._source.children.unshift(ObjectDefinePropertyPolyfill);
             }
-            if (this.options.JSON) {
+            if (PolyfillsPlugin.options.JSON) {
                 JSONPolyfill = fs.readFileSync(require.resolve('polyfill-service/polyfills/JSON/polyfill.js'), 'utf8') || '';
-                compilation.assets[this.options.bundle]._source.children.unshift(JSONPolyfill);
+                compilation.assets[PolyfillsPlugin.options.bundle]._source.children.unshift(JSONPolyfill);
             }
-            if (this.options.html5Elements) {
+            if (PolyfillsPlugin.options.html5Elements) {
                 JSONPolyfill = fs.readFileSync(require.resolve('polyfill-service/polyfills/~html5-elements/polyfill.js'), 'utf8') || '';
-                compilation.assets[this.options.bundle]._source.children.unshift(JSONPolyfill);
+                compilation.assets[PolyfillsPlugin.options.bundle]._source.children.unshift(JSONPolyfill);
             }
             callback();
         }
@@ -27,3 +27,4 @@ PolyfillsPlugin.prototype.apply = function(compiler) {
 };
 
 module.exports = PolyfillsPlugin;
+
