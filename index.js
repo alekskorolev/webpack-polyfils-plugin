@@ -1,6 +1,8 @@
 var fs = require('fs'),
     ObjectDefinePropertyPolyfill,
-    JSONPolyfill;
+    JSONPolyfill,
+    html5ElementsPolyfill,
+    indexOfPolyfill;
 
 function PolyfillsPlugin(options) {
     PolyfillsPlugin.options = options || {};
@@ -18,8 +20,12 @@ PolyfillsPlugin.prototype.apply = function(compiler) {
                 compilation.assets[PolyfillsPlugin.options.bundle]._source.children.unshift(JSONPolyfill);
             }
             if (PolyfillsPlugin.options.html5Elements) {
-                JSONPolyfill = fs.readFileSync(require.resolve('polyfill-service/polyfills/~html5-elements/polyfill.js'), 'utf8') || '';
-                compilation.assets[PolyfillsPlugin.options.bundle]._source.children.unshift(JSONPolyfill);
+                html5ElementsPolyfill = fs.readFileSync(require.resolve('polyfill-service/polyfills/~html5-elements/polyfill.js'), 'utf8') || '';
+                compilation.assets[PolyfillsPlugin.options.bundle]._source.children.unshift(html5ElementsPolyfill);
+            }
+            if (PolyfillsPlugin.options.indexOf) {
+                indexOfPolyfill = fs.readFileSync(require.resolve('polyfill-service/polyfills/Array/prototype/indexOf/polyfill.js'), 'utf8') || '';
+                compilation.assets[PolyfillsPlugin.options.bundle]._source.children.unshift(indexOfPolyfill);
             }
             callback();
         }
@@ -27,4 +33,3 @@ PolyfillsPlugin.prototype.apply = function(compiler) {
 };
 
 module.exports = PolyfillsPlugin;
-
