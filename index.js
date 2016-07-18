@@ -2,7 +2,8 @@ var fs = require('fs'),
     ObjectDefinePropertyPolyfill,
     JSONPolyfill,
     html5ElementsPolyfill,
-    indexOfPolyfill;
+    indexOfPolyfill,
+    bindPolyfill;
 
 function PolyfillsPlugin(options) {
     PolyfillsPlugin.options = options || {};
@@ -26,6 +27,10 @@ PolyfillsPlugin.prototype.apply = function(compiler) {
             if (PolyfillsPlugin.options.indexOf) {
                 indexOfPolyfill = fs.readFileSync(require.resolve('polyfill-service/polyfills/Array/prototype/indexOf/polyfill.js'), 'utf8') || '';
                 compilation.assets[PolyfillsPlugin.options.bundle]._source.children.unshift(indexOfPolyfill);
+            }
+            if (PolyfillsPlugin.options.bind) {
+                bindPolyfill = fs.readFileSync(require.resolve('polyfill-service/polyfills/Function/prototype/bind/polyfill.js'), 'utf8') || '';
+                compilation.assets[PolyfillsPlugin.options.bundle]._source.children.unshift(bindPolyfill);
             }
             callback();
         }
